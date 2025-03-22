@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/nathanau/Developer/CLion/blackjack game/cmake-build-debug"
+			"value" : "/Users/nathanau/Developer/CLion/blackjack/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -479,7 +479,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/nathanau/Developer/CLion/blackjack game/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "/Users/nathanau/Developer/CLion/blackjack/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -539,7 +539,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/nathanau/Developer/CLion/blackjack game"
+			"value" : "/Users/nathanau/Developer/CLion/blackjack"
 		},
 		{
 			"name" : "CMAKE_INSTALL_NAME_TOOL",
@@ -819,7 +819,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "blackjack_game"
+			"value" : "blackjack"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1118,6 +1118,42 @@
 			"value" : "FALSE"
 		},
 		{
+			"name" : "blackjack_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/Users/nathanau/Developer/CLion/blackjack/cmake-build-debug"
+		},
+		{
+			"name" : "blackjack_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "ON"
+		},
+		{
+			"name" : "blackjack_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/Users/nathanau/Developer/CLion/blackjack"
+		},
+		{
 			"name" : "blackjack_game_BINARY_DIR",
 			"properties" : 
 			[
@@ -1127,7 +1163,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/nathanau/Developer/CLion/blackjack game/cmake-build-debug"
+			"value" : "/Users/nathanau/Developer/CLion/blackjack/cmake-build-debug"
 		},
 		{
 			"name" : "blackjack_game_IS_TOP_LEVEL",
@@ -1151,7 +1187,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/nathanau/Developer/CLion/blackjack game"
+			"value" : "/Users/nathanau/Developer/CLion/blackjack"
 		}
 	],
 	"kind" : "cache",
