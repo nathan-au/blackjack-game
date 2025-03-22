@@ -4,19 +4,19 @@
 using namespace std;
 
 string* createDeck() {
-    string suits[4] = {"clubs", "diamonds", "hearts", "spades"};
-    string ranks[13] = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+    const string suits[4] = {"Clubs", "Diamonds", "Hearts", "Spades"};
+    const string ranks[13] = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
     static string deck[52] = {};
 
     int card_index = 0;
-    for (int s = 0; s < 4; s++) {
-        for (int r = 0; r < 13; r++) {
-            deck[card_index] = ranks[r] + " of " + suits[s];
+    for (const auto & suit : suits) {
+        for (const auto & rank : ranks) {
+            deck[card_index] = rank + " of " + suit;
             card_index++;
         }
     }
 
-    srand(time(NULL));
+    srand(time(nullptr));
     // int shuffle_swaps = rand() % 500;
     for (int x = 0; x < 1000; x++) {
         int card_1_index = rand() % 52;
@@ -37,10 +37,7 @@ int player_hand_score[2] = {0, 0};
 int dealer_hand_score = 0;
 
 int main() {
-
-
-    string* deck;
-    deck = createDeck();
+    string *deck = createDeck();
     int deck_index = 0;
 
     // for (int x = 0; x < 52; x++) {
@@ -57,7 +54,6 @@ int main() {
         cout << dealer_hand[x] << endl;
     }
     cout << endl;
-    // cout << player_hand_score << endl;
     bool ace = false;
 
     cout << "Your hand: " << endl;
