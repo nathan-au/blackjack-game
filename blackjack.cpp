@@ -1,8 +1,9 @@
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
 #include <map>
 #include <array>
+#include <random>
+#include <algorithm>
+#include <ranges>
 using namespace std;
 
 const string suits[4] = {"Clubs", "Diamonds", "Hearts", "Spades"};
@@ -13,15 +14,14 @@ vector <string> createDeck() {
     vector <string> deck;
     for (const auto & suit : suits) {
         for (const auto & rank : ranks) {
-            deck.push_back(rank + " of " + suit);
+            string card;
+            card.append(rank).append(" of ").append(suit);
+            deck.push_back(card);
         }
     }
-    srand(time(nullptr));
-    for (int x = 0; x < 1000; x++) {
-        int card_1_index = rand() % 52;
-        int card_2_index = rand() % 52;
-        swap(deck[card_1_index], deck[card_2_index]);
-    }
+    random_device rd;
+    mt19937 rng(rd());
+    ranges::shuffle(deck, rng);
     return deck;
 }
 
