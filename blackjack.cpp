@@ -38,8 +38,6 @@ array<int, 2> calculateHandScore(const vector <string> & hand) {
             hand_score[0] +=  card_value;
         }
         hand_score[1] += card_value;
-
-
     }
 
     return hand_score;
@@ -63,51 +61,96 @@ int getPlayerChoice() {
     return choice;
 }
 
-void printHand(const vector <string> & hand, const char who) {
-    if (who == 'D') {
-        cout << "Dealer's hand: " << endl;
-    }
-    else if (who == 'P') {
-        cout << "Your hand: " << endl;
-    }
+void printHand(const vector <string> & hand, const bool hide) {
+    size_t max_card_index = hand.size();
 
-    for (const auto & card : hand) {
-        cout << card << endl;
+    if (hide) {
+        max_card_index -= 1;
     }
 
-    array<int, 2> hand_score = calculateHandScore(hand);
+    for (size_t card_index = 0; card_index < max_card_index; card_index++) {
+        if (card_index < max_card_index - 1) {
+            cout << hand[card_index] << ", ";
+        }
+        else {
+            cout << hand[card_index];
+        }
+    }
 
-    if (hand_score[0] != hand_score[1]) {
-        cout << hand_score[0] << " / " << hand_score[1] << endl;
+    if (hide) {
+        cout << ", ___ of ______" << endl;
     }
     else {
-        cout << hand_score[0] << endl;
+        cout << endl;
     }
+
+    if (!hide) {
+        array<int, 2> hand_score = calculateHandScore(hand);
+
+        if (hand_score[0] != hand_score[1]) {
+            cout << "Hand score = " << hand_score[0] << " / " << hand_score[1] << endl;
+        }
+        else {
+            cout << "Hand score = " << hand_score[0] << endl;
+        }
+    }
+
 }
 
+bool checkBlackjack(const vector <string> & hand) {
+    array<int, 2> hand_score = calculateHandScore(hand);
 
+    if (hand_score[1] == 21) {
+        return true;
+    }
+    return false;
+}
+
+void checkBust(const vector <string> & hand) {
+    array<int, 2> hand_score = calculateHandScore(hand);
+    if (hand_score[1] > 21 || hand_score[1] > 21) {
+        cout << "Bust!" << endl;
+        exit(0);
+    }
+}
 
 int main() {
     const vector <string> deck = createDeck();
     int deck_index = 0;
 
+
     // for (const auto & card : deck) { cout << card << endl; }
 
     vector <string> player_hand = {deck[deck_index++], deck[deck_index++]};
     vector <string> dealer_hand = {deck[deck_index++], deck[deck_index++]};
+    int player_hand_index = 2;
+    int dealer_hand_index = 2;
 
-    printHand(dealer_hand, 'D');
     cout << endl;
-    printHand(player_hand, 'P');
+    cout << "Dealer's hand: " << endl;
+    printHand(dealer_hand, true);
     cout << endl;
+    cout << "Your hand: " << endl;
+    printHand(player_hand, false);
+    cout << endl;
+
+    if (checkBlackjack(player_hand) == true) {
+        cout << "Blackjack wins!" << endl;
+        exit(0);
+    }
 
     int player_choice = getPlayerChoice();
-
+    cout << endl;
     if (player_choice == 1) {
         cout << "You hit" << endl;
+        player_hand.push_back(deck[deck_index++]);
+        printHand(player_hand, false);
+        checkBust (player_hand);
+        cout << "You did not bust" << endl;
     }
     else if (player_choice == 2) {
         cout << "You stand" << endl;
+
     }
 
     return 0;
