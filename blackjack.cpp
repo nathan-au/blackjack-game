@@ -83,6 +83,8 @@ void printHand(const vector <string> & hand, const bool hide) {
             cout << "Hand score = " << hand_score[0] << endl;
         }
     }
+    cout << endl;
+
 }
 
 bool checkBlackjack(const vector <string> & hand) {
@@ -124,19 +126,18 @@ bool playerTurn() {
 
     if (choice == 1) {
         cout << "You hit" << endl;
-        player_hand.push_back(deck[deck_index++]);
         cout << endl;
+        player_hand.push_back(deck[deck_index++]);
         printHand(player_hand, false);
     }
     else if (choice == 2) {
         cout << "You stand" << endl;
+        cout << endl;
+
         return false;
     }
     return true;
 }
-
-
-
 
 int main() {
 
@@ -146,20 +147,30 @@ int main() {
     cout << endl;
     cout << "Dealer's hand: " << endl;
     printHand(dealer_hand, true);
-    cout << endl;
     cout << "Your hand: " << endl;
     printHand(player_hand, false);
-    cout << endl;
 
-    // checkBlackjack(player_hand);
+    if (checkBlackjack(player_hand) == true) {
+        return 0;
+    }
 
     while (true) {
-        if (playerTurn() == false || checkBlackjack(player_hand) == true || checkBust(player_hand) == true) {
+        if (playerTurn() == false) {
             break;
+        }
+        if (checkBust(player_hand) == true) {
+            return 0;
+        }
+        if (checkBlackjack(player_hand) == true) {
+            return 0;
         }
     }
 
-    cout << "now it is dealer's turn" << endl;
+    if (checkBust(player_hand)) {
+        return 0;
+    }
+
+    cout << "Now it's the dealer's turn" << endl;
 
     return 0;
 }
