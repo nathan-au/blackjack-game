@@ -10,8 +10,6 @@ const string suits[4] = {"Clubs", "Diamonds", "Hearts", "Spades"};
 const string ranks[13] = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
 map<string, int> values = {{"A", 11}, {"2", 2}, {"3", 3}, {"4", 4}, {"5", 5}, {"6", 6}, {"7", 7}, {"8", 8}, {"9", 9}, {"10", 10}, {"J", 10}, {"Q", 10}, {"K", 10}};
 
-
-
 vector <string> createDeck() {
     vector <string> deck;
     for (const auto & suit : suits) {
@@ -76,14 +74,16 @@ void printHand(const vector <string> & hand, const bool hide) {
         cout << endl;
         array<int, 2> hand_score = calculateHandScore(hand);
 
-        if (hand_score[0] != hand_score[1] && hand_score[1] <= 21) {
-            cout << "Hand score = " << hand_score[0] << " / " << hand_score[1] << endl;
+        if (hand_score[0] != hand_score[1] && hand_score[1] <= 21 && hand_score[1] != 21) {
+            cout << "Total = " << hand_score[0] << " / " << hand_score[1] << endl;
+        }
+        else if (hand_score[1] == 21) {
+            cout << "Total = " << hand_score[1] << endl;
         }
         else {
-            cout << "Hand score = " << hand_score[0] << endl;
+            cout << "Total = " << hand_score[0] << endl;
         }
     }
-    cout << endl;
 
 }
 
@@ -139,18 +139,37 @@ bool playerTurn() {
     return true;
 }
 
+bool dealerTurn() {
+    if (calculateHandScore(dealer_hand)[0] >= 17) {
+        cout << "Dealer stands" << endl;
+        cout << endl;
+
+        return false;
+    }
+
+    cout << "Dealer hits" << endl;
+    cout << endl;
+
+    dealer_hand.push_back(deck[deck_index++]);
+    printHand(dealer_hand, false);
+
+    return true;
+}
+
+
 int main() {
-
-
-    // for (const auto & card : deck) { cout << card << endl; }
 
     cout << endl;
     cout << "Dealer's hand: " << endl;
     printHand(dealer_hand, true);
+    cout << endl;
+
     cout << "Your hand: " << endl;
     printHand(player_hand, false);
 
+
     if (checkBlackjack(player_hand) == true) {
+        cout << "\033[32mYOU WIN !\033[0m" << endl; // Green text
         return 0;
     }
 
@@ -159,18 +178,70 @@ int main() {
             break;
         }
         if (checkBust(player_hand) == true) {
+            cout << "\033[31mDEALER WINS !\033[0m" << endl; // Red text
+
             return 0;
         }
         if (checkBlackjack(player_hand) == true) {
+            cout << "\033[32mYOU WIN !\033[0m" << endl; // Green text
+
             return 0;
         }
     }
 
-    if (checkBust(player_hand)) {
+
+
+    cout << "--- Dealer's turn ---" << endl;
+    cout << endl;
+    if (checkBlackjack(dealer_hand) == true) {
+        cout << "\033[31mDEALER WINS !\033[0m" << endl; // Red text
+
         return 0;
     }
+    cout << "Dealer's hand: " << endl;
+    printHand(dealer_hand, false);
+    while (true) {
+        if (dealerTurn() == false) {
+            break;
+        }
+        if (checkBust(dealer_hand) == true) {
+            cout << "\033[32mYOU WIN !\033[0m" << endl; // Green text
 
-    cout << "Now it's the dealer's turn" << endl;
+            return 0;
+        }
+        if (checkBlackjack(dealer_hand) == true) {
+
+            return 0;
+        }
+    }
+    cout << "player and dealer are both standing" << endl;
+
+
+    int final_player_score;
+    if (calculateHandScore(player_hand)[1] < 21 && calculateHandScore(player_hand)[1] != 0) {
+        final_player_score = calculateHandScore(player_hand)[1];
+    }
+    else {
+        final_player_score = calculateHandScore(player_hand)[0];
+    }
+
+    int final_dealer_score;
+    if (calculateHandScore(dealer_hand)[1] < 21 && calculateHandScore(dealer_hand)[1] != 0) {
+        final_dealer_score = calculateHandScore(dealer_hand)[1];
+    }
+    else {
+        final_dealer_score = calculateHandScore(dealer_hand)[0];
+    }
+
+    if (final_player_score > final_dealer_score) {
+        cout << "\033[32mYOU WIN !\033[0m" << endl; // Green text
+    }
+    else if (final_dealer_score > final_player_score) {
+        cout << "\033[31mDEALER WINS !\033[0m" << endl; // Red text
+    }
+    else if (final_player_score == final_dealer_score) {
+        cout << "\033[32mITS A TIE !\033[0m" << endl;
+    }
 
     return 0;
 }
