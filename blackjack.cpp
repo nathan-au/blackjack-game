@@ -4,6 +4,7 @@
 #include <random>
 #include <algorithm>
 #include <ranges>
+#include <unistd.h>
 using namespace std;
 
 constexpr char GREEN[] = "\033[32m";
@@ -133,6 +134,8 @@ bool playerTurn() {
 }
 
 bool dealerTurn() {
+    usleep(250000);
+
     if (calculateHandScore(dealer_hand)[0] < 17) {
         cout << "Dealer hits" << endl << endl;
         dealer_hand.push_back(deck[deck_index++]);
@@ -186,12 +189,13 @@ int main() {
     }
 
     cout << "--- Dealer's turn ---" << endl << endl;
+    cout << "Dealer's hand: " << endl;
+    printHand(dealer_hand, false);
 
     if (checkBlackjack(dealer_hand, "dealer") == true) {
         announceWinner("dealer");
     }
-    cout << "Dealer's hand: " << endl;
-    printHand(dealer_hand, false);
+
     while (true) {
         if (dealerTurn() == false) {
             break;
